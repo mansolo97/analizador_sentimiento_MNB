@@ -53,8 +53,8 @@ Crea una carpeta llamada `dataset/` en la raíz del proyecto y coloca ahí el ar
 
 1. **Clonar el repositorio:**
 ```bash
-git clone <URL_DE_TU_REPOSITORIO>
-cd <NOMBRE_DE_TU_CARPETA>
+git clone https://github.com/mansolo97/analizador_sentimiento_MNB.git
+cd analizador_sentimiento_MNB
 
 ```
 
