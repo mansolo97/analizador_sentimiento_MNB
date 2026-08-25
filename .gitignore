@@ -1,0 +1,6 @@
+.env
+__pycache__/
+venv/
+sentiment_MNB1.py
+*.joblib
+*.csv
