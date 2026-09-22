@@ -36,7 +36,7 @@ def entrenar_MNB():
 
     except Exception as e:
         print(f" Error al cargar el dataset: {e}")
-        sys.exit()
+        sys.exit("Archivo no encontrado")
 
     #Convertimos positivo a 1 y negativo a 0
     df['sentimiento_binario'] = (df['sentiment'] == 'positive').astype(int)
