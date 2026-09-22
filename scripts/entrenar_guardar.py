@@ -5,8 +5,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score
+from pathlib import Path
 import os
 import sys
+
+
+BASE_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = BASE_DIR.parent
+RUTA_DATASET = PROJECT_ROOT / 'dataset' / 'IMDB Dataset SPANISH.csv'
 
 STOP_WORDS_ES = [
     "de", "la", "que", "el", "en", "y", "a", "los", "del", "se", "las",
@@ -26,7 +32,7 @@ def entrenar_MNB():
 
     # Datos de entrenamiento reseñas IMDB 
     try:
-        df = pd.read_csv("../dataset/IMDB Dataset SPANISH.csv",encoding='utf-8')
+        df = pd.read_csv(RUTA_DATASET,encoding='utf-8')
 
     except Exception as e:
         print(f" Error al cargar el dataset: {e}")
