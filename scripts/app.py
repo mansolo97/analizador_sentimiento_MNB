@@ -81,7 +81,7 @@ def procesar_nueva_reseña(nueva_reseña):
         
     except Exception as e:
         print(f"\nError al conectar con Gemini: {e}")
-
+        return "Lo sentimos, no pudimos generar una respuesta automática en este momento."
 if __name__ == "__main__":
 
     #===========================
