@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score
-
+import os
 import sys
 
 # ==========================================
@@ -52,7 +52,8 @@ def entrenar_MNB():
 
     predicciones = modelo_ml.predict(X_test)
     print(f"Exactitud en prueba: {accuracy_score(y_test, predicciones) * 100:.2f}%")
-
+    
+    os.makedirs('../models', exist_ok=True)
     joblib.dump(modelo_ml, '../models/modelo_naive_bayes.joblib')
     joblib.dump(vectorizador, '../models/vectorizador_tfidf.joblib')
 
