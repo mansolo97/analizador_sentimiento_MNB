@@ -8,6 +8,17 @@ from sklearn.metrics import accuracy_score
 import os
 import sys
 
+STOP_WORDS_ES = [
+    "de", "la", "que", "el", "en", "y", "a", "los", "del", "se", "las",
+    "por", "un", "para", "con", "no", "una", "su", "al", "lo", "como",
+    "más", "pero", "sus", "le", "ya", "o", "este", "sí", "porque", "esta",
+    "entre", "cuando", "muy", "sin", "sobre", "también", "me", "hasta",
+    "hay", "donde", "quien", "desde", "todo", "nos", "durante", "todos",
+    "uno", "les", "ni", "contra", "otros", "ese", "eso", "ante", "ellos",
+    "e", "esto", "mí", "antes", "algunos", "qué", "unos", "yo", "otro",
+    "otras", "otra", "él", "tanto", "esa"
+]
+
 # ==========================================
 # PARTE 1: MACHINE LEARNING CLÁSICO
 # ==========================================
@@ -39,7 +50,7 @@ def entrenar_MNB():
     vectorizador = TfidfVectorizer(max_features=25000,
                                     ngram_range=(1,2), #N-gramas para que el vectorizador tome parejas de palabras
                                     min_df=2,
-                                    stop_words=['el', 'la', 'los', 'las', 'de', 'del', 'un', 'una', 'y', 'en', 'con', 'por', 'para', 'mis', 'sus']
+                                    stop_words=STOP_WORDS_ES,
                                    )
     X_train = vectorizador.fit_transform(X_train_raw)
     X_test = vectorizador.transform(X_test_raw)
