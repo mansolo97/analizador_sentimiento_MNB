@@ -27,7 +27,7 @@ if not os.path.exists(ruta_modelo) or not os.path.exists(ruta_vectorizador):
 modelo_ml = joblib.load(ruta_modelo)
 vectorizador = joblib.load(ruta_vectorizador)
 
-print("Modelo y Vectorizador cargados.")
+print("Modelo y Vectorizador cargados.\n")
 
 # ==========================================
 # PARTE 3 - PIPELINE CON IA GENERATIVA
@@ -40,31 +40,33 @@ def procesar_nueva_reseña(nueva_reseña):
 
     # Muestra la probabilidad de [Negativo (0), Positivo (1)]
     probabilidades = modelo_ml.predict_proba(reseña_vectorizada)[0]
-    print(f"Probabilidades -> Negativo: {probabilidades[0]:.2%}, Positivo: {probabilidades[1]:.2%}")
-   # sys.exit()
+    
     
     sentimiento_texto = "POSITIVO" if prediccion == 1 else "NEGATIVO"
+
+   
     print(f"\n=== ANÁLISIS DE SISTEMA ===")
+    print(f"Probabilidades -> Negativo: {probabilidades[0]:.2%}, Positivo: {probabilidades[1]:.2%}")
     print(f"Reseña recibida: '{nueva_reseña}'")
     print(f"Predicción ML: {sentimiento_texto}")
-    
-    # Para una mala reseña genera una respuesta personalizada con ayuda de un LLM
-    if prediccion == 0:
-        instruccion_ia = (
-            "El cliente dejó una reseña NEGATIVA. Redacta una respuesta pidiendo disculpas formales, "
-            "muestra empatía y ofrécele un cupón de 15% de descuento para su siguiente compra. "
-            "El mensaje debe estar a nombre del equipo de atención de empresas patito."
-        )
+
     # Para una buena reseña envía una respuesta genérica
-    else:
-        generic_response = (
+    if prediccion == 1:
+        print("\n=== RESPUESTA GENÉRICA ===")
+        return (
             "¡Hola! ¡Muchísimas gracias por tu comentario! Nos alegra enormemente saber que todo estuvo excelente. "
             "\nTe invitamos a seguir muy pendiente de nuestras redes sociales para que no te pierdas ninguna de nuestras próximas novedades y sorpresas. ¡Nos encanta tenerte con nosotros!"
             "\n\nCon entusiasmo,"
             "**\nEl equipo de Atención de Empresas Patito**"
         )
-        return generic_response
-    
+
+    # Para una mala reseña genera una respuesta personalizada con ayuda de un LLM
+    instruccion_ia = (
+            "El cliente dejó una reseña NEGATIVA. Redacta una respuesta pidiendo disculpas formales, "
+            "muestra empatía y ofrécele un cupón de 15% de descuento para su siguiente compra. "
+            "El mensaje debe estar a nombre del equipo de atención de empresas patito."
+        )
+
     prompt_final = f"{instruccion_ia}\n\nReseña del cliente: \"{nueva_reseña}\""
     
     try:
@@ -94,6 +96,5 @@ if __name__ == "__main__":
     print("\n" + "="*50 + "\n")
 
     print("--- CASO 2: Reseña Negativa ---")
-    reseña_negativa = "Pésimo servicio, el empaque llegó roto y tardaron 3 semanas en responder mis correos."
     reseña_negativa ="No me gusto el producto, es de muy mala calidad, no vale la pena"
     print(procesar_nueva_reseña(reseña_negativa))
