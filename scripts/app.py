@@ -3,17 +3,24 @@ import sys
 import joblib
 from google import genai
 from dotenv import load_dotenv
-
+from pathlib import Path
 from entrenar_guardar import entrenar_MNB
 
-load_dotenv('../.env')
+BASE_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = BASE_DIR.parent
+
+RUTA_MODELO = PROJECT_ROOT / 'models' / 'modelo_naive_bayes.joblib'
+RUTA_VECTORIZADOR = PROJECT_ROOT / 'models' / 'vectorizador_tfidf.joblib'
+RUTA_ENV = PROJECT_ROOT / '.env' 
+
+load_dotenv(RUTA_ENV)
 GEMINI_API_KEY = os.getenv("API_KEY")
 
 # ==========================================
 # PARTE 2 - CARGA DEL MODELO YA ENTRENADO
 # ==========================================
-ruta_modelo = '../models/modelo_naive_bayes.joblib'
-ruta_vectorizador = '../models/vectorizador_tfidf.joblib'
+ruta_modelo = RUTA_MODELO
+ruta_vectorizador = RUTA_VECTORIZADOR
 
 #Comprueba si existe el archivo del modelo y vectorizador
 #Si no existen entrena al modelo y guarda los archivos
