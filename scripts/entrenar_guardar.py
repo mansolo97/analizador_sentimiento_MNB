@@ -4,7 +4,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from pathlib import Path
 import os
 import sys
@@ -53,8 +53,8 @@ def entrenar_MNB():
         )
 
     # Convertimos el texto a números usando TF-IDF
-    vectorizador = TfidfVectorizer(max_features=25000,
-                                    ngram_range=(1,2), #N-gramas para que el vectorizador tome parejas de palabras
+    vectorizador = TfidfVectorizer(max_features=50000,
+                                    ngram_range=(1,3), #N-gramas para que el vectorizador tome parejas de palabras
                                     min_df=2,
                                     stop_words=STOP_WORDS_ES,
                                    )
@@ -69,6 +69,16 @@ def entrenar_MNB():
 
     predicciones = modelo_ml.predict(X_test)
     print(f"Exactitud en prueba: {accuracy_score(y_test, predicciones) * 100:.2f}%")
+    print("\nClassification Report: ")
+    print(classification_report(
+        y_test, 
+        predicciones, 
+        target_names=['Negativo', 'Positivo']
+    ))
+
+    print("\nMatriz de Confusión: ")
+    print(confusion_matrix(y_test, predicciones))
+
     
     os.makedirs('../models', exist_ok=True)
     joblib.dump(modelo_ml, '../models/modelo_naive_bayes.joblib')
